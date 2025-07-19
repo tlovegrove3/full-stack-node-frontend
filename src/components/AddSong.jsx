@@ -13,7 +13,8 @@ function AddSong() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const API_BASE_URL = "http://localhost:3000/api";
+  // const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL = "https://full-stack-node-backend.onrender.com/api";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
