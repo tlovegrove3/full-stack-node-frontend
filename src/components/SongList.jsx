@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function SongList() {
+function SongList({ onEditSong }) {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -119,7 +119,7 @@ function SongList() {
               <div className="song-info">
                 {song.popularity !== undefined && (
                   <p>
-                    <strong>🌟 Popularity:</strong> {song.popularity}/100
+                    <strong>🌟 Popularity:</strong> {song.popularity}/10
                   </p>
                 )}
                 <p>
@@ -142,10 +142,16 @@ function SongList() {
 
               <div className="song-actions">
                 <button
+                  onClick={() => onEditSong(song._id)}
+                  className="edit-btn"
+                >
+                  ✏️ Edit
+                </button>
+                <button
                   onClick={() => deleteSong(song._id)}
                   className="delete-btn"
                 >
-                  🗑️ Delete Song
+                  🗑️ Delete
                 </button>
               </div>
             </div>

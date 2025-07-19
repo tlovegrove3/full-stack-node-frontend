@@ -2,10 +2,22 @@ import { useState } from "react";
 import Home from "./components/Home.jsx";
 import SongList from "./components/SongList.jsx";
 import AddSong from "./components/AddSong.jsx";
+import EditSong from "./components/EditSong.jsx";
 import "./App.css";
 
 function App() {
   const [page, setPage] = useState("home");
+  const [editingSongId, setEditingSongId] = useState(null);
+
+  const handleEditSong = (songId) => {
+    setEditingSongId(songId);
+    setPage("edit");
+  };
+
+  const handleBackToSongs = () => {
+    setEditingSongId(null);
+    setPage("songs");
+  };
 
   return (
     <div className="App">
@@ -35,8 +47,14 @@ function App() {
 
       <main className="main-content">
         {page === "home" && <Home />}
-        {page === "songs" && <SongList />}
+        {page === "songs" && <SongList onEditSong={handleEditSong} />}
         {page === "add" && <AddSong />}
+        {page === "edit" && (
+          <EditSong
+            songId={editingSongId}
+            onBack={handleBackToSongs}
+          />
+        )}
       </main>
     </div>
   );
