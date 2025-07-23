@@ -1,50 +1,39 @@
-function Home() {
+function Home({ onNavigate, isAuthenticated }) {
+  const handleSongManagementClick = () => {
+    if (isAuthenticated) {
+      onNavigate && onNavigate("songs");
+    } else {
+      onNavigate && onNavigate("login");
+    }
+  };
+
   return (
     <div className="home">
       <h1>🎓 Welcome to the Songs Manager</h1>
-      <p>Some songs.</p>
+      <p>Manage your music collection with ease.</p>
 
-      <div
-        style={{
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white",
-          padding: "20px",
-          borderRadius: "10px",
-          margin: "20px 0",
-        }}
-      >
+      <div className="system-status">
         <h3>✅ System Status</h3>
-        <ul style={{ listStyle: "none", padding: 0 }}>
+        <ul className="status-list">
           <li>🔌 Backend API: Connected</li>
           <li>🗄️ Database: MongoDB Atlas</li>
           <li>⚛️ Frontend: React + Vite</li>
-          <li>🚀 Status: Ready for Stage 1</li>
         </ul>
       </div>
 
       <div className="action-cards">
         <div
-          style={{
-            background: "#f8f9fa",
-            padding: "15px",
-            borderRadius: "8px",
-            margin: "10px 0",
-            border: "1px solid #dee2e6",
-          }}
+          className="action-card clickable"
+          onClick={handleSongManagementClick}
         >
           <h4>📚 Song Management</h4>
-          <p>Create, view, edit, and delete songs</p>
+          <p>
+            {isAuthenticated
+              ? "Create, view, edit, and delete songs"
+              : "Login required to manage songs"}
+          </p>
+          <div className="card-arrow">{isAuthenticated ? "→" : "🔐"}</div>
         </div>
-
-        <div
-          style={{
-            background: "#f8f9fa",
-            padding: "15px",
-            borderRadius: "8px",
-            margin: "10px 0",
-            border: "1px solid #dee2e6",
-          }}
-        ></div>
       </div>
     </div>
   );

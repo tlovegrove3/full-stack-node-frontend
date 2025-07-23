@@ -5,8 +5,8 @@ function SongList({ onEditSong }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // You can make this configurable later
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 
   useEffect(() => {
     fetchSongs();
@@ -105,57 +105,60 @@ function SongList({ onEditSong }) {
           </button>
         </div>
       ) : (
-        <div className="songs-grid">
-          {songs.map((song) => (
-            <div
-              key={song._id}
-              className="song-card"
-            >
-              <div className="song-header">
-                <h3>🎵 {song.title}</h3>
-                <span className="song-artist">🎤 {song.artist}</span>
-              </div>
-
-              <div className="song-info">
-                {song.popularity !== undefined && (
-                  <p>
-                    <strong>🌟 Popularity:</strong> {song.popularity}/10
-                  </p>
-                )}
-                <p>
-                  <strong>🎸 Genre:</strong>{" "}
-                  {song.genre && song.genre.length > 0
-                    ? song.genre.join(", ")
-                    : "Not specified"}
-                </p>
-                <p>
-                  <strong>📅 Release Date:</strong>{" "}
-                  {new Date(song.releaseDate).toLocaleDateString()}
-                </p>
-              </div>
-
-              <div className="song-meta">
-                <small>
-                  Added: {new Date(song.createdAt).toLocaleDateString()}
-                </small>
-              </div>
-
-              <div className="song-actions">
-                <button
-                  onClick={() => onEditSong(song._id)}
-                  className="edit-btn"
-                >
-                  ✏️ Edit
-                </button>
-                <button
-                  onClick={() => deleteSong(song._id)}
-                  className="delete-btn"
-                >
-                  🗑️ Delete
-                </button>
-              </div>
-            </div>
-          ))}
+        <div className="songs-table-container">
+          <table className="songs-table">
+            <thead>
+              <tr>
+                <th>🎵 Title</th>
+                <th>🎤 Artist</th>
+                <th>🎸 Genre</th>
+                <th>🌟 Popularity</th>
+                <th>📅 Release Date</th>
+                <th>📝 Added</th>
+                <th>⚙️ Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {songs.map((song) => (
+                <tr key={song._id}>
+                  <td className="song-title">{song.title}</td>
+                  <td className="song-artist">{song.artist}</td>
+                  <td className="song-genre">
+                    {song.genre && song.genre.length > 0
+                      ? song.genre.join(", ")
+                      : "Not specified"}
+                  </td>
+                  <td className="song-popularity">
+                    {song.popularity !== undefined
+                      ? `${song.popularity}/10`
+                      : "N/A"}
+                  </td>
+                  <td className="song-date">
+                    {new Date(song.releaseDate).toLocaleDateString()}
+                  </td>
+                  <td className="song-added">
+                    {new Date(song.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="song-actions">
+                    <button
+                      onClick={() => onEditSong(song._id)}
+                      className="edit-btn table-btn"
+                      title="Edit song"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      onClick={() => deleteSong(song._id)}
+                      className="delete-btn table-btn"
+                      title="Delete song"
+                    >
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

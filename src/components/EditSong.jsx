@@ -13,7 +13,8 @@ function EditSong({ songId, onBack }) {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 
   useEffect(() => {
     if (songId) {
@@ -169,7 +170,7 @@ function EditSong({ songId, onBack }) {
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="popularity">🌟 Popularity (0-100)</label>
+            <label htmlFor="popularity">🌟 Popularity (0-10)</label>
             <input
               type="number"
               id="popularity"

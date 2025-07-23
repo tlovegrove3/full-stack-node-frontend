@@ -13,8 +13,8 @@ function AddSong() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  // const API_BASE_URL = "http://localhost:3000/api";
-  const API_BASE_URL = "https://full-stack-node-backend.onrender.com/api";
+  const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -136,9 +136,9 @@ function AddSong() {
               name="popularity"
               value={songData.popularity}
               onChange={handleChange}
-              placeholder="e.g., 85"
+              placeholder="e.g., 8"
               min="0"
-              max="100"
+              max="10"
               required
             />
           </div>
